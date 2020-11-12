@@ -10,6 +10,42 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = (env) => {
   const isProduction = env.production === true
 
+  const cssLoaders = [
+    {
+      loader: 'css-loader',
+      options: {
+        sourceMap: !isProduction,
+      },
+    },
+    {
+      loader: 'postcss-loader',
+      options: {
+        postcssOptions: {
+          plugins: [
+            (() => {
+              if (isProduction) {
+                return autoprefixer(), cssnano()
+              } else return autoprefixer()
+            })(),
+          ],
+        },
+        sourceMap: !isProduction,
+      },
+    },
+    {
+      loader: 'resolve-url-loader',
+      options: {
+        sourceMap: !isProduction,
+      },
+    },
+    {
+      loader: 'sass-loader',
+      options: {
+        sourceMap: true, // always true for work resolve-url-loader!!!
+      },
+    },
+  ]
+
   return {
     mode: isProduction ? 'production' : 'development',
     entry: {
@@ -76,47 +112,24 @@ module.exports = (env) => {
         },
         {
           test: /\.scss$/,
-          use: [
+          oneOf: [
             {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                hmr: !isProduction,
-                reloadAll: true,
-                sourceMap: !isProduction,
-              },
-            },
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: !isProduction,
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                postcssOptions: {
-                  plugins: [
-                    (() => {
-                      if (isProduction) {
-                        return autoprefixer(), cssnano()
-                      } else return autoprefixer()
-                    })(),
-                  ],
+              issuer: /index.js/,
+              use: [
+                {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: {
+                    hmr: !isProduction,
+                    reloadAll: true,
+                    sourceMap: !isProduction,
+                  },
                 },
-                sourceMap: !isProduction,
-              },
+                ...cssLoaders,
+              ],
             },
             {
-              loader: 'resolve-url-loader',
-              options: {
-                sourceMap: !isProduction,
-              },
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true, // always true for work resolve-url-loader!!!
-              },
+              issuer: /components/,
+              use: cssLoaders,
             },
           ],
         },
