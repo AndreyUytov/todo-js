@@ -1,14 +1,14 @@
 import TaskLi from './task-elem'
 import css from './style.scss'
+import svgSprite from './svg-sprite'
 
 class TaskUl extends HTMLElement {
   constructor(tasks) {
     super()
     this.tasks = tasks
     this.attachShadow({ mode: 'open' })
-    this.scss = document.createElement('style')
-    this.scss.append(css)
     this.ul = document.createElement('ul')
+    this.ul.className = 'tasks-list'
     this.ul.append(
       ...this.tasks.map((el) => {
         return new TaskLi(el)
@@ -19,8 +19,10 @@ class TaskUl extends HTMLElement {
     })
     console.log('from constructor')
   }
+
   connectedCallback() {
-    this.shadowRoot.append(this.scss, this.ul)
+    this.shadowRoot.innerHTML = this.render()
+    this.shadowRoot.append(this.ul)
     console.log('render')
   }
 
@@ -39,8 +41,15 @@ class TaskUl extends HTMLElement {
 
     console.log(this.tasks)
   }
+
   getTasks() {
     return this.tasks
+  }
+
+  render() {
+    return `
+    <style>${css}</style>
+    ${svgSprite}`
   }
 }
 
