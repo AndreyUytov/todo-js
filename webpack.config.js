@@ -114,6 +114,10 @@ module.exports = (env) => {
           test: /\.scss$/,
           oneOf: [
             {
+              issuer: /components/,
+              use: cssLoaders,
+            },
+            {
               issuer: /index.js/,
               use: [
                 {
@@ -126,10 +130,6 @@ module.exports = (env) => {
                 },
                 ...cssLoaders,
               ],
-            },
-            {
-              issuer: /components/,
-              use: cssLoaders,
             },
           ],
         },

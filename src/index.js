@@ -1,8 +1,8 @@
 import './styles/index.scss'
 
-import TaskUl from './js/components/tasks-list/task-list'
+import TaskUl from './js/components/tasks-list'
 
-const taskList = new TaskUl(['one', 'two'])
+const taskList = new TaskUl(['разработать интерфейс программы', 'two'])
 
 document.body.append(taskList)
 
