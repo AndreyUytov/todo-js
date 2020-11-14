@@ -14,16 +14,11 @@ class TaskUl extends HTMLElement {
         return new TaskLi(el)
       })
     )
-    this.ul.addEventListener('task', (evt) => {
-      console.log(evt.detail.id)
-    })
-    console.log('from constructor')
   }
 
   connectedCallback() {
-    this.shadowRoot.innerHTML = this.render()
+    this.render()
     this.shadowRoot.append(this.ul)
-    console.log('render')
   }
 
   addTasks(tasks) {
@@ -47,7 +42,7 @@ class TaskUl extends HTMLElement {
   }
 
   render() {
-    return `
+    this.shadowRoot.innerHTML = `
     <style>${css}</style>
     ${svgSprite}`
   }

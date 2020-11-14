@@ -1,31 +1,57 @@
 class TaskLi extends HTMLElement {
-  constructor(elem) {
+  constructor({ id, text }) {
     super()
-    this.elem = elem
-    this.clickEvent = new CustomEvent('task', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-      detail: { id: '1' },
-    })
+    this.text = text
+    this._id = id
+    this._checkbox = null
     this.addEventListener('click', () => {
-      this.dispatchEvent(this.clickEvent)
+      console.log(this.isDone)
     })
   }
+
+  static get observedAttributes() {
+    return ['text']
+  }
+
   connectedCallback() {
-    this.innerHTML = this.render()
+    if (!this.rendered) {
+      this.render()
+      this.rendered = true
+    }
+    this._checkbox = this.querySelector('.task__input')
+    console.log(
+      'render run',
+      this.getAttribute('text'),
+      this.isDone,
+      this.querySelector('.task__input')
+    )
+  }
+
+  get isDone() {
+    return this._checkbox.checked
+  }
+
+  set text(text) {
+    this.setAttribute('text', text)
+  }
+
+  get text() {
+    return this.getAttribute('text')
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    this.render()
   }
 
   render() {
-    return `
-    
+    this.innerHTML = `
     <li class='task'>
       <label class='task__label'>
         <input type='checkbox' class='task__input visually-hidden' />
         <svg class='task__checkbox-marker'>
           <use href='#checkbox-icon' />
         </svg>
-        ${this.elem}
+        ${this.text}
       </label>
       <button class='task__redactBtn snap'>
         <svg class='task__redactIcon'>
