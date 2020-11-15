@@ -14,6 +14,10 @@ class TaskUl extends HTMLElement {
         return new TaskLi(el)
       })
     )
+
+    // this.addEventListener('click', (evt) => {
+    //   if (evt.relatedTarget.closest(''))
+    // })
   }
 
   connectedCallback() {

@@ -1,16 +1,12 @@
 class TaskLi extends HTMLElement {
-  constructor({ id, text }) {
+  constructor({ id, value, isDone = false }) {
     super()
-    this.text = text
-    this._id = id
-    this._checkbox = null
-    this.addEventListener('click', () => {
-      console.log(this.isDone)
-    })
-  }
+    this.text = value
+    this.isDone = isDone
 
-  static get observedAttributes() {
-    return ['text']
+    this.dataset.id = id
+    this._checkbox = null
+    this._labelText = null
   }
 
   connectedCallback() {
@@ -19,39 +15,42 @@ class TaskLi extends HTMLElement {
       this.rendered = true
     }
     this._checkbox = this.querySelector('.task__input')
-    console.log(
-      'render run',
-      this.getAttribute('text'),
-      this.isDone,
-      this.querySelector('.task__input')
-    )
+    this._labelText = this.querySelector('.task__text')
+  }
+
+  set isDone(bool) {
+    this._isDone = bool
   }
 
   get isDone() {
-    return this._checkbox.checked
+    if (!this._checkbox) {
+      return this._isDone
+    } else return this._checkbox.checked
   }
 
-  set text(text) {
-    this.setAttribute('text', text)
+  set text(value) {
+    if (!this._labelText) {
+      this._text = value
+    } else {
+      this._labelText.textContent = this._text = value
+    }
   }
 
   get text() {
-    return this.getAttribute('text')
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    this.render()
+    return this._text
   }
 
   render() {
+    console.log('RENDER TASK!')
     this.innerHTML = `
     <li class='task'>
       <label class='task__label'>
-        <input type='checkbox' class='task__input visually-hidden' />
+        <input type='checkbox' class='task__input visually-hidden'
+        ${this.isDone ? 'checked' : ''} />
         <svg class='task__checkbox-marker'>
           <use href='#checkbox-icon' />
         </svg>
-        ${this.text}
+        <span class='task__text'>${this.text}</span>
       </label>
       <button class='task__redactBtn snap'>
         <svg class='task__redactIcon'>
