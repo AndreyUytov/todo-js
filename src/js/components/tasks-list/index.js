@@ -15,14 +15,34 @@ class TaskUl extends HTMLElement {
       })
     )
 
-    // this.addEventListener('click', (evt) => {
-    //   if (evt.relatedTarget.closest(''))
-    // })
+    this.ul.addEventListener('click', (evt) => {
+      let actionElem = evt.target.closest('[data-action]')
+      if (!actionElem) return
+
+      let action = actionElem.dataset.action
+      if (action) {
+        let task = evt.target.closest('task-elem')
+        this[action](task)
+      }
+    })
   }
 
   connectedCallback() {
     this.render()
     this.shadowRoot.append(this.ul)
+  }
+
+  check(task) {
+    console.log(task.isDone)
+  }
+
+  redact(task) {
+    task.text = 'Changed'
+    console.log(task.text)
+  }
+
+  delete(task) {
+    console.log(task)
   }
 
   addTasks(tasks) {

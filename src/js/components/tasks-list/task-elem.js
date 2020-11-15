@@ -45,19 +45,20 @@ class TaskLi extends HTMLElement {
     this.innerHTML = `
     <li class='task'>
       <label class='task__label'>
-        <input type='checkbox' class='task__input visually-hidden'
+        <input type='checkbox' data-action='check'
+         class='task__input visually-hidden'
         ${this.isDone ? 'checked' : ''} />
         <svg class='task__checkbox-marker'>
           <use href='#checkbox-icon' />
         </svg>
         <span class='task__text'>${this.text}</span>
       </label>
-      <button class='task__redactBtn snap'>
+      <button data-action='redact' class='task__redactBtn snap'>
         <svg class='task__redactIcon'>
           <use href='#edit-icon' class='task__redactUse' />
         </svg>
       </button>
-      <button class='task__deleteBtn snap'>
+      <button data-action='delete' class='task__deleteBtn snap'>
         <svg class='task__deleteIcon'>
           <use href='#close-icon' class='task__deleteUse' />
         </svg>
