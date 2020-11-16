@@ -61,6 +61,17 @@ class TaskUl extends HTMLElement {
     console.log(this.tasks)
   }
 
+  deleteTask(tasksId) {
+    let removedTask = this.ul.querySelector(`task-elem[data-id="${tasksId}"]`)
+    removedTask.remove()
+    this.tasks = this.tasks.filter((el) => {
+      if (el.id !== tasksId) {
+        return true
+      }
+    })
+    console.log(this.tasks)
+  }
+
   getTasks() {
     return this.tasks
   }

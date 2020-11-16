@@ -10,6 +10,6 @@ const taskList = new TaskUl([
 
 document.body.append(taskList)
 
-// setTimeout(() => {
-//   taskList.addTasks(['1', '2'])
-// }, 3000)
+setTimeout(() => {
+  taskList.deleteTask(2)
+}, 2000)

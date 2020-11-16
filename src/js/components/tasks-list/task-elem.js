@@ -18,6 +18,10 @@ class TaskLi extends HTMLElement {
     this._labelText = this.querySelector('.task__text')
   }
 
+  get id() {
+    return this.dataset.id
+  }
+
   set isDone(bool) {
     this._isDone = bool
   }
