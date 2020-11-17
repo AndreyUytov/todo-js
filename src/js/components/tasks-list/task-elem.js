@@ -4,7 +4,7 @@ class TaskLi extends HTMLElement {
     this.text = value
     this.isDone = isDone
 
-    this.dataset.id = id
+    this._id = id
     this._checkbox = null
     this._labelText = null
   }
@@ -19,7 +19,7 @@ class TaskLi extends HTMLElement {
   }
 
   get id() {
-    return this.dataset.id
+    return this._id
   }
 
   set isDone(bool) {

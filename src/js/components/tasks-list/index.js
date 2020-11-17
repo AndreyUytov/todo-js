@@ -5,15 +5,13 @@ import svgSprite from './svg-sprite'
 class TaskUl extends HTMLElement {
   constructor(tasks) {
     super()
-    this.tasks = tasks
+    this.tasks = tasks.map((el) => {
+      return new TaskLi(el)
+    })
     this.attachShadow({ mode: 'open' })
     this.ul = document.createElement('ul')
     this.ul.className = 'tasks-list'
-    this.ul.append(
-      ...this.tasks.map((el) => {
-        return new TaskLi(el)
-      })
-    )
+    this.ul.append(...this.tasks)
 
     this.ul.addEventListener('click', (evt) => {
       let actionElem = evt.target.closest('[data-action]')
@@ -33,7 +31,7 @@ class TaskUl extends HTMLElement {
   }
 
   check(task) {
-    console.log(task.isDone)
+    console.log(task.isDone, task.id)
   }
 
   redact(task) {
@@ -47,29 +45,27 @@ class TaskUl extends HTMLElement {
 
   addTasks(tasks) {
     if (Array.isArray(tasks)) {
-      this.tasks = [...this.tasks, ...tasks]
-      this.ul.prepend(
-        ...tasks.map((el) => {
-          return new TaskLi(el)
-        })
-      )
+      const tasksForAdd = tasks.map((el) => new TaskLi(el))
+      this.tasks = [...tasksForAdd, ...this.tasks]
+      this.ul.prepend(...tasksForAdd)
     } else {
-      this.tasks.push(tasks)
-      this.ul.prepend(new TaskLi(tasks))
+      const taskForAdd = new TaskLi(tasks)
+      this.tasks = [taskForAdd, ...this.tasks]
+      this.ul.prepend(taskForAdd)
     }
 
     console.log(this.tasks)
   }
 
   deleteTask(tasksId) {
-    let removedTask = this.ul.querySelector(`task-elem[data-id="${tasksId}"]`)
-    removedTask.remove()
     this.tasks = this.tasks.filter((el) => {
-      if (el.id !== tasksId) {
+      if (el.id == tasksId) {
+        el.remove()
+        return false
+      } else {
         return true
       }
     })
-    console.log(this.tasks)
   }
 
   getTasks() {

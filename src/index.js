@@ -11,5 +11,10 @@ const taskList = new TaskUl([
 document.body.append(taskList)
 
 setTimeout(() => {
-  taskList.deleteTask(2)
+  console.log(taskList.getTasks())
+  taskList.getTasks().forEach((element) => {
+    element.isDone ? taskList.deleteTask(element.id) : ''
+  })
+  taskList.addTasks({ id: 5, value: 'ghbdtn' })
+  console.log(taskList.getTasks())
 }, 2000)
