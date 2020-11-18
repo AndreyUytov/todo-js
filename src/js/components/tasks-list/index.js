@@ -3,11 +3,13 @@ import css from './style.scss'
 import svgSprite from './svg-sprite'
 
 class TaskUl extends HTMLElement {
-  constructor(tasks) {
+  constructor({ tasks, deleteTask, editTask }) {
     super()
     this.tasks = tasks.map((el) => {
       return new TaskLi(el)
     })
+    this.deleteCallBack = deleteTask
+    this.editCallBack = editTask
     this.attachShadow({ mode: 'open' })
     this.ul = document.createElement('ul')
     this.ul.className = 'tasks-list'
@@ -32,15 +34,17 @@ class TaskUl extends HTMLElement {
 
   check(task) {
     console.log(task.isDone, task.id)
+    this.editCallBack(task)
   }
 
   redact(task) {
-    task.text = 'Changed'
-    console.log(task.text)
+    task.value = 'Changed'
+    console.log(task.value)
   }
 
   delete(task) {
-    console.log(task)
+    task.remove()
+    this.deleteCallBack(task)
   }
 
   addTasks(tasks) {
@@ -73,6 +77,7 @@ class TaskUl extends HTMLElement {
   }
 
   render() {
+    console.log('RENDER TASK-LIST')
     this.shadowRoot.innerHTML = `
     <style>${css}</style>
     ${svgSprite}`

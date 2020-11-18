@@ -1,25 +1,24 @@
 import './styles/index.scss'
 
+import Controller from './js/controller'
 import createStore from './js/model/create-store'
-import reducer from './js/model'
+import rootReducer from './js/model/reducer'
 
-import Header from './js/components/header'
-import TaskUl from './js/components/tasks-list'
+// const preloadedState = JSON.parse(localStorage.getItem('todoState'))
+const preloadedState = {
+  counter: 0,
+  tasks: [
+    { id: 1000, value: 'hi', isDone: false },
+    { id: 1001, value: 'hello', isDone: true },
+    { id: 1002, value: 'you!', isDone: false },
+  ],
+}
+const store = createStore(rootReducer, preloadedState)
+store.subscribe(() => {
+  console.log(store.getState().tasks)
+  localStorage.setItem('todoState', JSON.stringify(store.getState()))
+})
 
-const header = new Header()
-const taskList = new TaskUl([
-  { id: 1, value: 'разработать интерфейс программы' },
-  { id: 2, value: 'two' },
-  { id: 3, value: 'tree', isDone: true },
-])
+const cntr = new Controller(store)
 
-root.append(header, taskList)
-
-setTimeout(() => {
-  console.log(taskList.getTasks())
-  taskList.getTasks().forEach((element) => {
-    element.isDone ? taskList.deleteTask(element.id) : ''
-  })
-  taskList.addTasks({ id: 5, value: 'ghbdtn' })
-  console.log(taskList.getTasks())
-}, 2000)
+cntr.renderApp()

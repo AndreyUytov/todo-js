@@ -1,7 +1,7 @@
 class TaskLi extends HTMLElement {
   constructor({ id, value, isDone = false }) {
     super()
-    this.text = value
+    this.value = value
     this.isDone = isDone
 
     this._id = id
@@ -32,7 +32,7 @@ class TaskLi extends HTMLElement {
     } else return this._checkbox.checked
   }
 
-  set text(value) {
+  set value(value) {
     if (!this._labelText) {
       this._text = value
     } else {
@@ -40,7 +40,7 @@ class TaskLi extends HTMLElement {
     }
   }
 
-  get text() {
+  get value() {
     return this._text
   }
 
@@ -55,7 +55,7 @@ class TaskLi extends HTMLElement {
         <svg class='task__checkbox-marker'>
           <use href='#checkbox-icon' />
         </svg>
-        <span class='task__text'>${this.text}</span>
+        <span class='task__text'>${this.value}</span>
       </label>
       <button data-action='redact' class='task__redactBtn snap'>
         <svg class='task__redactIcon'>
