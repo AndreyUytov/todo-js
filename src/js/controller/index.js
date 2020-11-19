@@ -3,6 +3,7 @@ import { addNewTask, deleteTask, editTask } from './../model/actions'
 import Header from './../components/header'
 import TaskUl from './../components/tasks-list'
 import TaskCreator from './../components/task-creator'
+import Footer from './../components/footer'
 
 export default class Controller {
   constructor(store) {
@@ -19,6 +20,7 @@ export default class Controller {
       deleteTask: this.deleteTask,
       editTask: this.editTask,
     })
+    this.footer = new Footer()
   }
 
   deleteTask(task) {
@@ -36,6 +38,6 @@ export default class Controller {
   }
 
   renderApp() {
-    root.append(this.header, this.taskCreator, this.taskList)
+    root.append(this.header, this.taskCreator, this.taskList, this.footer)
   }
 }
