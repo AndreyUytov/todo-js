@@ -1,4 +1,5 @@
 import TaskLi from './task-elem'
+import RedactInput from './redact-input'
 import css from './style.scss'
 import svgSprite from './svg-sprite'
 
@@ -38,7 +39,8 @@ class TaskUl extends HTMLElement {
   }
 
   redact(task) {
-    task.value = 'Changed'
+    const redactInput = new RedactInput(task, this.editCallBack)
+    task.append(redactInput)
     console.log(task.value)
   }
 

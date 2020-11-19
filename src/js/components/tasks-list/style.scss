@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .visually-hidden:not(:focus):not(:active),
 input[type='checkbox'].visually-hidden,
 input[type='radio'].visually-hidden {
@@ -17,6 +21,8 @@ input[type='radio'].visually-hidden {
 }
 
 task-elem {
+  position: relative;
+  width: 100%;
   margin-bottom: 5px;
 }
 
@@ -115,4 +121,38 @@ svg {
 
 .task__deleteBtn {
   margin: 0 5px;
+}
+
+// стили для попап-редактора задачи
+
+redact-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.redact__input {
+  min-width: 100%;
+  height: 50px;
+
+  padding-left: 10px;
+  padding-right: 55px;
+
+  font-size: 15px;
+
+  border: none;
+  outline: none;
+
+  &:focus {
+    outline: var(--akcentColor) solid 1px;
+  }
+}
+
+.redact__btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 50px;
 }

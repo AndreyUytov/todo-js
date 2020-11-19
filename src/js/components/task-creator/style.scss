@@ -25,16 +25,19 @@
   font-size: 15px;
 
   border: none;
+  outline: none;
 
-  outline: var(--akcentColor);
+  &:focus {
+    outline: var(--akcentColor) solid 1px;
+  }
 }
 
 .task-creator__btn {
   position: absolute;
   right: 0;
-  top: 1px;
-  width: 38px;
-  height: 38px;
+  top: 0px;
+  width: 40px;
+  height: 40px;
 
   display: flex;
   align-items: center;

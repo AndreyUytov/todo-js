@@ -1,7 +1,7 @@
 function counter(state = 0, action) {
   switch (action.type) {
     case 'ADD_NEW_TASK':
-      return state++
+      return ++state
     default:
       return state
   }
@@ -11,12 +11,12 @@ function tasks(state = [], action) {
   switch (action.type) {
     case 'ADD_NEW_TASK':
       return [
-        ...state,
         {
           id: action.id,
           value: action.value,
           isDone: action.isDone,
         },
+        ...state,
       ]
 
     case 'EDIT_TASK':
