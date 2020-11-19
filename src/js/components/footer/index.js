@@ -1,13 +1,38 @@
 import css from './style.scss'
 
 class FooterTasks extends HTMLElement {
-  constructor() {
+  constructor(tasks) {
     super()
     this.attachShadow({ mode: 'open' })
+    this.tasks = tasks
+    this._comleteTasks = null
+    this._allTasks = null
+    this._allCheckBtn = null
+    this._removeCheckedBtn = null
   }
 
   connectedCallback() {
-    this.render()
+    if (this.tasks.length) {
+      this.render()
+      this._comleteTasks = this.shadowRoot.querySelector('.checked-tasks')
+      this._allTasks = this.shadowRoot.querySelector('.call-tasks')
+      this._allCheckBtn = this.shadowRoot.querySelector(
+        '.footer__check-all-btn'
+      )
+      this._removeCheckedBtn = this.shadowRoot.querySelector(
+        'footer__remove-checked-btn'
+      )
+    } else {
+      this.shadowRoot.innerHTML = ``
+    }
+  }
+
+  update() {
+    if (this.tasks.length) {
+      this.render()
+    } else {
+      this.shadowRoot.innerHTML = ``
+    }
   }
 
   render() {
