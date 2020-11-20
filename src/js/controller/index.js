@@ -20,7 +20,10 @@ export default class Controller {
       deleteTask: this.deleteTask,
       editTask: this.editTask,
     })
-    this.footer = new Footer()
+    this.footer = new Footer(this.store.getState().tasks)
+    this.unsubscribeFooter = this.store.subscribe(() =>
+      this.footer.update(this.store.getState().tasks)
+    )
   }
 
   deleteTask(task) {

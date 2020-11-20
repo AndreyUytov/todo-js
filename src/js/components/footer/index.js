@@ -12,25 +12,34 @@ class FooterTasks extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.tasks.length) {
+    this.update(this.tasks)
+  }
+
+  update(tasks) {
+    this.tasks = tasks
+    if (this.tasks.length && !this.rendered) {
       this.render()
       this._comleteTasks = this.shadowRoot.querySelector('.checked-tasks')
-      this._allTasks = this.shadowRoot.querySelector('.call-tasks')
+      this._allTasks = this.shadowRoot.querySelector('.all-tasks')
       this._allCheckBtn = this.shadowRoot.querySelector(
         '.footer__check-all-btn'
       )
       this._removeCheckedBtn = this.shadowRoot.querySelector(
         'footer__remove-checked-btn'
       )
-    } else {
-      this.shadowRoot.innerHTML = ``
+      this._comleteTasks.textContent = this.tasks.filter(
+        (el) => el.isDone === true
+      ).length
+      this._allTasks.textContent = this.tasks.length
     }
-  }
+    if (this.tasks.length && this.rendered) {
+      this._comleteTasks.textContent = this.tasks.filter(
+        (el) => el.isDone === true
+      ).length
+      this._allTasks.textContent = this.tasks.length
+    }
 
-  update() {
-    if (this.tasks.length) {
-      this.render()
-    } else {
+    if (!this.tasks.length) {
       this.shadowRoot.innerHTML = ``
     }
   }
