@@ -37,6 +37,21 @@ function tasks(state = [], action) {
         return result
       }, [])
 
+    case 'DO_ALL_TASKS_COMPLETE':
+      return state.reduce((result, elem) => {
+        elem.isDone = true
+        result.push(elem)
+        return result
+      }, [])
+
+    case 'DELETE_COMPLETE_TASKS':
+      return state.reduce((result, elem) => {
+        if (!elem.isDone) {
+          result.push(elem)
+        }
+        return result
+      }, [])
+
     default:
       return state
   }

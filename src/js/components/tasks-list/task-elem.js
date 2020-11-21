@@ -24,6 +24,9 @@ class TaskLi extends HTMLElement {
 
   set isDone(bool) {
     this._isDone = bool
+    if (this._checkbox) {
+      this._checkbox.checked = bool
+    }
   }
 
   get isDone() {

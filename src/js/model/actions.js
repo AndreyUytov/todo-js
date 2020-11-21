@@ -22,3 +22,15 @@ export function editTask({ id, value, isDone }) {
     isDone,
   }
 }
+
+export function deleteCompleteTasks() {
+  return {
+    type: 'DELETE_COMPLETE_TASKS',
+  }
+}
+
+export function doAllTasksComplete() {
+  return {
+    type: 'DO_ALL_TASKS_COMPLETE',
+  }
+}

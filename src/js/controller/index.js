@@ -1,4 +1,10 @@
-import { addNewTask, deleteTask, editTask } from './../model/actions'
+import {
+  addNewTask,
+  deleteTask,
+  editTask,
+  deleteCompleteTasks,
+  doAllTasksComplete,
+} from './../model/actions'
 
 import Header from './../components/header'
 import TaskUl from './../components/tasks-list'
@@ -12,6 +18,8 @@ export default class Controller {
     this.deleteTask = this.deleteTask.bind(this)
     this.editTask = this.editTask.bind(this)
     this.addNewTask = this.addNewTask.bind(this)
+    this.deleteCompleteTasks = this.deleteCompleteTasks.bind(this)
+    this.doAllTasksComplete = this.doAllTasksComplete.bind(this)
 
     this.header = new Header()
     this.taskCreator = new TaskCreator(this.addNewTask)
@@ -23,10 +31,22 @@ export default class Controller {
     this.unsubscribeTaskList = this.store.subscribe(() =>
       this.taskList.update(this.store.getState().tasks)
     )
-    this.footer = new Footer(this.store.getState().tasks)
+    this.footer = new Footer(
+      this.store.getState().tasks,
+      this.deleteCompleteTasks,
+      this.doAllTasksComplete
+    )
     this.unsubscribeFooter = this.store.subscribe(() =>
       this.footer.update(this.store.getState().tasks)
     )
+  }
+
+  deleteCompleteTasks() {
+    this.store.dispatch(deleteCompleteTasks())
+  }
+
+  doAllTasksComplete() {
+    this.store.dispatch(doAllTasksComplete())
   }
 
   deleteTask(task) {

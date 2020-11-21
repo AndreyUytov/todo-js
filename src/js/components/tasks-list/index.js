@@ -59,14 +59,24 @@ class TaskUl extends HTMLElement {
 
   update(tasks) {
     if (tasks.length > this.tasks.length) {
+      console.log(this.tasks.length, 'from 1st')
       this.addTask(tasks[0])
+      return
     }
 
     if (tasks.length <= this.tasks.length) {
+      console.log(this.tasks.length, 'from 2st')
+      let tasksElements = []
       this.tasks.forEach((el) => {
         let taskFromState = tasks.find((obj) => el.id === obj.id)
         el.update(taskFromState)
+        if (taskFromState) {
+          tasksElements.push(el)
+        }
       })
+      this.tasks = tasksElements
+      console.log(this.tasks.length, 'from 2st')
+      return
     }
   }
 
