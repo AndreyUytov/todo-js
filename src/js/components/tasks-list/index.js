@@ -45,37 +45,29 @@ class TaskUl extends HTMLElement {
   }
 
   delete(task) {
-    task.remove()
+    console.log(task)
     this.deleteCallBack(task)
   }
 
-  addTasks(tasks) {
-    if (Array.isArray(tasks)) {
-      const tasksForAdd = tasks.map((el) => new TaskLi(el))
-      this.tasks = [...tasksForAdd, ...this.tasks]
-      this.ul.prepend(...tasksForAdd)
-    } else {
-      const taskForAdd = new TaskLi(tasks)
-      this.tasks = [taskForAdd, ...this.tasks]
-      this.ul.prepend(taskForAdd)
-    }
+  addTask(task) {
+    const taskForAdd = new TaskLi(task)
+    this.tasks = [taskForAdd, ...this.tasks]
+    this.ul.prepend(taskForAdd)
 
     console.log(this.tasks)
   }
 
-  deleteTask(tasksId) {
-    this.tasks = this.tasks.filter((el) => {
-      if (el.id == tasksId) {
-        el.remove()
-        return false
-      } else {
-        return true
-      }
-    })
-  }
+  update(tasks) {
+    if (tasks.length > this.tasks.length) {
+      this.addTask(tasks[0])
+    }
 
-  getTasks() {
-    return this.tasks
+    if (tasks.length <= this.tasks.length) {
+      this.tasks.forEach((el) => {
+        let taskFromState = tasks.find((obj) => el.id === obj.id)
+        el.update(taskFromState)
+      })
+    }
   }
 
   render() {

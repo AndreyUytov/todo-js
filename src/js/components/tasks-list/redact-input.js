@@ -3,11 +3,12 @@ class RedactInput extends HTMLElement {
     super()
     this.task = task
     this._input = null
-    this._btn = null
-    this.flag = false
     this.cb = () => {
-      this.task.value = this._input.value
-      cb(task)
+      cb({
+        id: this.task.id,
+        value: this._input.value,
+        isDone: this.task.isDone,
+      })
       this.remove()
     }
   }
@@ -19,13 +20,9 @@ class RedactInput extends HTMLElement {
     this._input.value = this.task.value
     this._input.focus()
     this._input.addEventListener('blur', this.cb)
-
-    this._btn = this.querySelector('.redact__btn')
-    this._btn.addEventListener('click', this.cb)
   }
 
   disconnectedCallback() {
-    this._btn.removeEventListener('click', this.cb)
     this._input.removeEventListener('blur', this.cb)
   }
 

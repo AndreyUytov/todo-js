@@ -20,6 +20,9 @@ export default class Controller {
       deleteTask: this.deleteTask,
       editTask: this.editTask,
     })
+    this.unsubscribeTaskList = this.store.subscribe(() =>
+      this.taskList.update(this.store.getState().tasks)
+    )
     this.footer = new Footer(this.store.getState().tasks)
     this.unsubscribeFooter = this.store.subscribe(() =>
       this.footer.update(this.store.getState().tasks)
@@ -37,7 +40,6 @@ export default class Controller {
   addNewTask(value) {
     let id = this.store.getState().counter
     this.store.dispatch(addNewTask({ id, value }))
-    this.taskList.addTasks({ id, value, isDone: false })
   }
 
   renderApp() {

@@ -44,6 +44,17 @@ class TaskLi extends HTMLElement {
     return this._text
   }
 
+  update(task) {
+    if (!task) {
+      this.remove()
+      return
+    } else if (task.value !== this.value) {
+      this.value = task.value
+    } else if (task.isDone !== this.isDone) {
+      this.isDone = task.isDone
+    }
+  }
+
   render() {
     console.log('RENDER TASK!')
     this.innerHTML = `
