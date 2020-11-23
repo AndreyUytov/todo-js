@@ -9,6 +9,7 @@ class TaskUl extends HTMLElement {
     this.tasks = tasks.map((el) => {
       return new TaskLi(el)
     })
+    this.dragNdropFlag = false
     this.deleteCallBack = deleteTask
     this.editCallBack = editTask
     this.attachShadow({ mode: 'open' })
@@ -31,6 +32,17 @@ class TaskUl extends HTMLElement {
       let target = evt.target.closest('task-elem')
       let shiftY = evt.clientY - target.getBoundingClientRect().top
       target.style.position = 'absolute'
+
+      function moveAt(evt) {
+        target.style.position = 'absolute'
+      }
+
+      target.addEventListener('pointermove', moveAt)
+
+      document.addEventListener('pointerup', (evt) => {
+        target.style.position = 'static'
+        target.removeEventListener('pointermove', moveAt)
+      })
     })
   }
 
