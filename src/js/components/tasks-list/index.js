@@ -26,6 +26,12 @@ class TaskUl extends HTMLElement {
         this[action](task)
       }
     })
+
+    this.ul.addEventListener('pointerdown', (evt) => {
+      let target = evt.target.closest('task-elem')
+      let shiftY = evt.clientY - target.getBoundingClientRect().top
+      target.style.position = 'absolute'
+    })
   }
 
   connectedCallback() {
