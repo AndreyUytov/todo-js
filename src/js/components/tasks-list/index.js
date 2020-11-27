@@ -5,7 +5,7 @@ import svgSprite from './svg-sprite'
 import dragNdrop from './drag-n-drop'
 
 class TaskUl extends HTMLElement {
-  constructor({ tasks, deleteTask, editTask }) {
+  constructor({ tasks, deleteTask, editTask, movingTask }) {
     super()
     this.tasks = tasks.map((el) => {
       return new TaskLi(el)
@@ -28,7 +28,9 @@ class TaskUl extends HTMLElement {
       }
     })
 
-    this.ul.addEventListener('pointerdown', (evt) => dragNdrop(evt, this))
+    this.ul.addEventListener('pointerdown', (evt) =>
+      dragNdrop(evt, this, movingTask)
+    )
 
     this.ul.addEventListener('pointerup', (evt) => {
       clearTimeout(this.dragNdropTimer)

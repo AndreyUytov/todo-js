@@ -34,3 +34,10 @@ export function doAllTasksComplete() {
     type: 'DO_ALL_TASKS_COMPLETE',
   }
 }
+
+export function movingTask(tasks) {
+  return {
+    type: 'ORDER_TASKS',
+    tasks,
+  }
+}

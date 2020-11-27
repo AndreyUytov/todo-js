@@ -52,6 +52,11 @@ function tasks(state = [], action) {
         return result
       }, [])
 
+    case 'ORDER_TASKS':
+      return action.tasks.map((id) => {
+        return state.find((elem) => elem.id === id)
+      })
+
     default:
       return state
   }

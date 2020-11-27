@@ -1,4 +1,4 @@
-export default (evt, context) => {
+export default (evt, context, cb) => {
   let target = evt.target.closest('task-elem')
   let widthTarget = target.offsetWidth
   context.dragNdropTimer = setTimeout(() => {
@@ -66,6 +66,13 @@ export default (evt, context) => {
       } else {
         context.ul.append(target)
       }
+
+      const ulElements = context.ul.querySelectorAll('task-elem')
+      const idsNewOrder = []
+      for (let task of ulElements) {
+        idsNewOrder.push(task.id)
+      }
+      cb(idsNewOrder)
 
       context.shadowRoot.removeEventListener('pointermove', onPointerMove)
       target.removeEventListener('pointerup', onPointerUp)

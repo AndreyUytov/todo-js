@@ -4,6 +4,7 @@ import {
   editTask,
   deleteCompleteTasks,
   doAllTasksComplete,
+  movingTask,
 } from './../model/actions'
 
 import Header from './../components/header'
@@ -20,6 +21,7 @@ export default class Controller {
     this.addNewTask = this.addNewTask.bind(this)
     this.deleteCompleteTasks = this.deleteCompleteTasks.bind(this)
     this.doAllTasksComplete = this.doAllTasksComplete.bind(this)
+    this.movingTask = this.movingTask.bind(this)
 
     this.header = new Header()
     this.taskCreator = new TaskCreator(this.addNewTask)
@@ -27,6 +29,7 @@ export default class Controller {
       tasks: this.store.getState().tasks,
       deleteTask: this.deleteTask,
       editTask: this.editTask,
+      movingTask: this.movingTask,
     })
     this.unsubscribeTaskList = this.store.subscribe(() =>
       this.taskList.update(this.store.getState().tasks)
@@ -60,6 +63,10 @@ export default class Controller {
   addNewTask(value) {
     let id = this.store.getState().counter
     this.store.dispatch(addNewTask({ id, value }))
+  }
+
+  movingTask(tasks) {
+    this.store.dispatch(movingTask(tasks))
   }
 
   renderApp() {
