@@ -2,6 +2,7 @@ import TaskLi from './task-elem'
 import RedactInput from './redact-input'
 import css from './style.scss'
 import svgSprite from './svg-sprite'
+import dragNdrop from './drag-n-drop'
 
 class TaskUl extends HTMLElement {
   constructor({ tasks, deleteTask, editTask }) {
@@ -27,79 +28,7 @@ class TaskUl extends HTMLElement {
       }
     })
 
-    this.ul.addEventListener('pointerdown', (evt) => {
-      let target = evt.target.closest('task-elem')
-      let widthTarget = target.offsetWidth
-      this.dragNdropTimer = setTimeout(() => {
-        let shiftY = evt.clientY - target.getBoundingClientRect().top
-        target.style.width = widthTarget + 'px'
-        target.style.position = 'absolute'
-        target.style.zIndex = 1000
-        this.shadowRoot.append(target)
-
-        moveAt(evt.pageY)
-
-        function moveAt(pageY) {
-          target.style.top = pageY - shiftY + 'px'
-        }
-
-        let currentClosestTask = null
-        let currentPositionForAdd = null
-
-        const onPointerMove = (evt) => {
-          moveAt(evt.pageY)
-
-          target.hidden = true
-          let elemUnderPointer = this.shadowRoot.elementFromPoint(
-            evt.clientX,
-            evt.clientY
-          )
-          target.hidden = false
-
-          if (!elemUnderPointer) return
-
-          let closestTask = elemUnderPointer.closest('task-elem')
-
-          if (currentClosestTask != closestTask) {
-            if (currentClosestTask) {
-              currentClosestTask.style.borderBottom = ''
-              currentClosestTask.style.borderTop = ''
-            }
-            currentClosestTask = closestTask
-            if (currentClosestTask) {
-              let taskBottom = currentClosestTask.getBoundingClientRect().bottom
-              if (taskBottom - evt.clientY >= 25) {
-                currentClosestTask.style.borderBottom =
-                  '1px solid var(--akcentColor)'
-                currentPositionForAdd = 'after'
-              } else {
-                currentClosestTask.style.borderTop =
-                  '1px solid var(--akcentColor)'
-                currentPositionForAdd = 'before'
-              }
-            }
-          }
-        }
-
-        const onPointerUp = (evt) => {
-          target.style.position = ''
-          target.style.top = ''
-          target.style.zIndex = ''
-          target.style.width = ''
-
-          currentClosestTask[currentPositionForAdd](target)
-          currentClosestTask.style.borderTop = ''
-          currentClosestTask.style.borderBottom = ''
-
-          this.shadowRoot.removeEventListener('pointermove', onPointerMove)
-          target.removeEventListener('pointerup', onPointerUp)
-        }
-
-        this.shadowRoot.addEventListener('pointermove', onPointerMove)
-
-        target.addEventListener('pointerup', onPointerUp)
-      }, 1000)
-    })
+    this.ul.addEventListener('pointerdown', (evt) => dragNdrop(evt, this))
 
     this.ul.addEventListener('pointerup', (evt) => {
       clearTimeout(this.dragNdropTimer)
