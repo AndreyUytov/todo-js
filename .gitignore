@@ -10,8 +10,6 @@
 
 # production
 /dist
-/src
-/webpack.config.js
 
 # misc
 .DS_Store

@@ -1,0 +1,158 @@
+* {
+  box-sizing: border-box;
+}
+
+.visually-hidden:not(:focus):not(:active),
+input[type='checkbox'].visually-hidden,
+input[type='radio'].visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+task-elem {
+  position: relative;
+  width: 100%;
+}
+
+svg {
+  width: 18px;
+  height: 18px;
+}
+
+.tasks-list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  list-style: none;
+
+  background: #ffffff;
+  box-shadow: 0px 20px 60px rgba(241, 244, 248, 0.5);
+  border-radius: 4px;
+}
+
+.task {
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: 4px;
+
+  transition: 0.5s;
+
+  &:hover {
+    box-shadow: 0px 5px 10px rgba(2, 117, 177, 0.5);
+  }
+}
+
+.task__label {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-left: 35px;
+  margin-right: 10px;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 15px;
+  line-height: 14px;
+
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    color: var(--akcentColor);
+  }
+}
+
+.task__input:checked + .task__checkbox-marker {
+  --display-checked: block;
+}
+
+.task__checkbox-marker {
+  position: absolute;
+  left: 10px;
+  top: 16px;
+}
+
+.snap {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    --fill-style: var(--akcentColor);
+  }
+
+  &:active {
+    transform: scale(1.15);
+  }
+}
+
+.task__redactBtn {
+  margin-left: auto;
+}
+
+.task__deleteBtn {
+  margin: 0 5px;
+}
+
+// стили для попап-редактора задачи
+
+redact-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.redact__input {
+  min-width: 100%;
+  height: 50px;
+
+  padding-left: 10px;
+  padding-right: 55px;
+
+  font-size: 15px;
+
+  border: none;
+  outline: none;
+
+  &:focus {
+    outline: var(--akcentColor) solid 1px;
+  }
+}
+
+.redact__btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 50px;
+}
