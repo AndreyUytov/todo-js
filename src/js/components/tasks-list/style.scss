@@ -23,8 +23,6 @@ input[type='radio'].visually-hidden {
 task-elem {
   position: relative;
   width: 100%;
-
-  touch-action: none;
 }
 
 svg {
@@ -46,8 +44,6 @@ svg {
   background: #ffffff;
   box-shadow: 0px 20px 60px rgba(241, 244, 248, 0.5);
   border-radius: 4px;
-
-  touch-action: none;
 }
 
 .task {

@@ -1,7 +1,6 @@
 export default (evt, context, cb) => {
+  evt.preventDefault()
   let target = evt.target.closest('task-elem')
-  target.ondragstart = () => false
-  target.setPointerCapture(evt.pointerId)
   let widthTarget = target.offsetWidth
   context.dragNdropTimer = setTimeout(() => {
     let shiftY = evt.clientY - target.getBoundingClientRect().top
@@ -77,11 +76,12 @@ export default (evt, context, cb) => {
       }
       cb(idsNewOrder)
 
+      context.shadowRoot.removeEventListener('pointermove', onPointerMove)
       target.removeEventListener('pointerup', onPointerUp)
     }
 
-    target.addEventListener('pointermove', onPointerMove)
+    context.shadowRoot.addEventListener('pointermove', onPointerMove)
 
     target.addEventListener('pointerup', onPointerUp)
-  }, 300)
+  }, 400)
 }
