@@ -1,3 +1,5 @@
+import { gsap } from 'gsap'
+
 class TaskLi extends HTMLElement {
   constructor({ id, value, isDone = false }) {
     super()
@@ -7,6 +9,7 @@ class TaskLi extends HTMLElement {
     this._id = id
     this._checkbox = null
     this._labelText = null
+    this._checkboxIcon = null
   }
 
   connectedCallback() {
@@ -16,6 +19,7 @@ class TaskLi extends HTMLElement {
     }
     this._checkbox = this.querySelector('.task__input')
     this._labelText = this.querySelector('.task__text')
+    this._checkboxIcon = this.querySelector('.task__checkbox-marker')
   }
 
   get id() {
