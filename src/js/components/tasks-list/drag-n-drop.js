@@ -1,5 +1,8 @@
 export default (evt, context, cb) => {
   evt.preventDefault()
+  let conteinerHeight = context.ul.offsetHeight
+  context.ul.style.height = conteinerHeight + 'px'
+  console.log(conteinerHeight)
   let target = evt.target.closest('task-elem')
   let widthTarget = target.offsetWidth
   context.dragNdropTimer = setTimeout(() => {
@@ -8,6 +11,7 @@ export default (evt, context, cb) => {
     target.style.position = 'absolute'
     target.style.zIndex = 1000
     context.shadowRoot.append(target)
+    
 
     moveAt(evt.pageY)
 
@@ -60,6 +64,7 @@ export default (evt, context, cb) => {
       target.style.top = ''
       target.style.zIndex = ''
       target.style.width = ''
+      context.ul.style.height = ''
 
       if (currentClosestTask) {
         currentClosestTask[currentPositionForAdd](target)
