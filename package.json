@@ -39,7 +39,6 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
-    "@babel/runtime": "^7.11.2",
-    "gsap": "^3.6.0"
+    "@babel/runtime": "^7.11.2"
   }
 }

@@ -1,5 +1,3 @@
-import { gsap } from 'gsap'
-
 class TaskLi extends HTMLElement {
   constructor({ id, value, isDone = false }) {
     super()
