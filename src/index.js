@@ -4,7 +4,7 @@ import Controller from './js/controller'
 import createStore from './js/model/create-store'
 import rootReducer from './js/model/reducer'
 
-let ExampleState = {
+const ExampleState = {
   counter: 0,
   tasks: [
     { id: 0, value: 'Для перетаскивания зажмите левую клавишу мыши на задаче', isDone: false },
@@ -14,7 +14,10 @@ let ExampleState = {
   ],
 }
 
-let preloadedState = JSON.parse(localStorage.getItem('todoState')) || ExampleState
+const todoStateFromLocalStorage = JSON.parse(localStorage.getItem('todoState'))
+
+let preloadedState = todoStateFromLocalStorage !== null ? todoStateFromLocalStorage : ExampleState
+
 
 const store = createStore(rootReducer, preloadedState)
 store.subscribe(() => {
