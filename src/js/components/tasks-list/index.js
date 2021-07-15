@@ -36,6 +36,18 @@ class TaskUl extends HTMLElement {
     this.ul.addEventListener('pointerup', (evt) => {
       clearTimeout(this.dragNdropTimer)
     })
+
+    this.ul.addEventListener(
+      'click',
+      (evt) => {
+        this.distance = Math.abs(this.startY - evt.clientY)
+        if (this.distance > 20) {
+          evt.preventDefault()
+          evt.stopPropagation()
+        }
+      },
+      true
+    )
   }
 
   connectedCallback() {

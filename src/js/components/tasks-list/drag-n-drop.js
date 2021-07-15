@@ -1,13 +1,18 @@
 export default (evt, context, cb) => {
   evt.preventDefault()
   let conteinerHeight = context.ul.offsetHeight
-  context.ul.style.height = conteinerHeight + 'px'
-  console.log(conteinerHeight)
+
   let target = evt.target.closest('task-elem')
   let widthTarget = target.offsetWidth
+
+  context.startY = evt.clientY
+
   context.dragNdropTimer = setTimeout(() => {
+    
+    context.ul.style.height = conteinerHeight + 'px'
     let shiftY = evt.clientY - target.getBoundingClientRect().top
     target.style.width = widthTarget + 'px'
+    target.style.touchAction = 'pan-x'
     target.style.position = 'absolute'
     target.style.zIndex = 1000
     context.shadowRoot.append(target)
@@ -37,7 +42,7 @@ export default (evt, context, cb) => {
 
       let closestTask = elemUnderPointer.closest('task-elem')
 
-      if (currentClosestTask == closestTask) {
+      if (currentClosestTask == closestTask && currentClosestTask !== null) {
         let taskBottom = currentClosestTask.getBoundingClientRect().bottom
         if (taskBottom - evt.clientY <= 25) {
           currentClosestTask.style.borderTop = ''
@@ -81,12 +86,12 @@ export default (evt, context, cb) => {
       }
       cb(idsNewOrder)
 
-      context.shadowRoot.removeEventListener('pointermove', onPointerMove)
-      target.removeEventListener('pointerup', onPointerUp)
+      document.removeEventListener('pointermove', onPointerMove)
+      document.removeEventListener('pointerup', onPointerUp)
     }
 
-    context.shadowRoot.addEventListener('pointermove', onPointerMove)
+    document.addEventListener('pointermove', onPointerMove)
 
-    target.addEventListener('pointerup', onPointerUp)
+    document.addEventListener('pointerup', onPointerUp)
   }, 400)
 }
