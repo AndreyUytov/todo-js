@@ -22,6 +22,7 @@ class TaskCreator extends HTMLElement {
 
     this._btn = this.shadowRoot.querySelector('.task-creator__btn')
     this._btn.addEventListener('click', () => {
+      this._input.focus()
       this.onInputListener(this._input)
     })
   }
